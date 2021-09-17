@@ -3,6 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import java.lang.Double.min
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -123,12 +124,23 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return when {
-        c * c + b * b == a * a && a + b > c && a + c > b && b + c > a -> 1
-        a * a + b * b > c * c && a + b > c && a + c > b && b + c > a -> 0
-        a * a + b * b < c * c && a + b > c && a + c > b && b + c > a -> 2
-        else -> -1
+    if (a + b > c && a + c > b && b + c > a) {
+        val mini = min(c, min(a,b))
+        val maxi = max(c, max(a,b))
+        val mini2 = when {
+            a > mini && a < maxi -> a
+            b > mini && b < maxi -> b
+            c > mini && c < maxi -> c
+            else -> c
+        }
+        return when {
+            (mini * mini + mini2 * mini2 == maxi * maxi) -> 1
+            (mini * mini + mini2 * mini2 > maxi * maxi) -> 0
+            (mini * mini + mini2 * mini2 < maxi * maxi) -> 2
+            else -> -1
+        }
     }
+    else return -1
 }
 
 /**
