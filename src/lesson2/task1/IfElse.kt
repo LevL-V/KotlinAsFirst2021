@@ -122,7 +122,14 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return when {
+        c * c + b * b == a * a && a + b > c && a + c > b && b + c > a -> 1
+        a * a + b * b > c * c && a + b > c && a + c > b && b + c > a -> 0
+        a * a + b * b < c * c && a + b > c && a + c > b && b + c > a -> 2
+        else -> -1
+    }
+}
 
 /**
  * Средняя (3 балла)
@@ -132,4 +139,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        a in c..d && b in c..d && b >= a -> b - a
+        c in a..b && d in a..b && d >= c -> d - c
+        c in a..d && b in a..d && b >= c -> b - c
+        a in c..b && d in c..b && d >= a -> d - a
+        else -> -1
+    }
+}
