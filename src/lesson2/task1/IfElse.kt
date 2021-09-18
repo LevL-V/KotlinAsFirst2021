@@ -125,22 +125,19 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a + b > c && a + c > b && b + c > a) {
-        val mini = min(c, min(a,b))
-        val maxi = max(c, max(a,b))
+        val maxi = max(a, max(b, c))
+        val mini = min(a, min(b, c))
         val mini2 = when {
             a > mini && a < maxi -> a
             b > mini && b < maxi -> b
-            c > mini && c < maxi -> c
             else -> c
         }
         return when {
-            (mini * mini + mini2 * mini2 == maxi * maxi) -> 1
-            (mini * mini + mini2 * mini2 > maxi * maxi) -> 0
-            (mini * mini + mini2 * mini2 < maxi * maxi) -> 2
-            else -> -1
+            maxi * maxi == mini2 * mini2 + mini * mini -> 1
+            maxi * maxi < mini2 * mini2 + mini * mini -> 0
+            else -> 2
         }
-    }
-    else return -1
+    } else return -1
 }
 
 /**
