@@ -69,15 +69,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
-        age % 100 == 11 || age % 100 == 12 || age % 100 == 13 || age % 100 == 14 -> "${age} лет"
-        age % 10 == 0 || age % 10 == 5 || age % 10 == 6 || age % 10 == 7 || age % 10 == 8 || age % 10 == 9 -> "${age} лет"
-        age % 10 == 1 -> "${age} год"
-        age % 10 == 2 || age % 10 == 3 || age % 10 == 4 -> "${age} года"
-        else -> "${age} год"
+fun ageDescription(age: Int): String =
+    when {
+        age % 100 in 11..14 -> "$age лет"
+        age % 10 == 0 || age % 10 in 5..9 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 in 2..4 -> "$age года"
+        else -> "$age год"
     }
-}
 
 /**
  * Простая (2 балла)
@@ -131,22 +130,7 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO() /*{
-    if (a + b > c && a + c > b && b + c > a) {
-        val maxi = max(a, max(b, c))
-        val mini = min(a, min(b, c))
-        val mini2 = when {
-            a > mini && a < maxi -> a
-            b > mini && b < maxi -> b
-            else -> c
-        }
-        return when {
-            maxi * maxi == mini2 * mini2 + mini * mini -> 1
-            maxi * maxi < mini2 * mini2 + mini * mini -> 0
-            else -> 2
-        }
-    } else return -1
-}*/
+fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
 
 /**
  * Средняя (3 балла)
@@ -156,12 +140,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO() /*{
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+    when {
         a in c..d && b in c..d && b >= a -> b - a
         c in a..b && d in a..b && d >= c -> d - c
         c in a..d && b in a..d && b >= c -> b - c
         a in c..b && d in c..b && d >= a -> d - a
         else -> -1
     }
-}

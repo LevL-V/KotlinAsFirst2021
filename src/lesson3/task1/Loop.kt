@@ -80,7 +80,17 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fibPrev = 1
+    for (i in 1..n) {
+        if (i in 1..2) continue
+        val fib2 = fib1
+        fib1 += fibPrev
+        fibPrev = fib2
+    }
+    return fib1
+}
 
 /**
  * Простая (2 балла)
@@ -192,7 +202,23 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    val sequenceItems = mutableListOf<Int>()
+    for(i in 1..n){
+        var iSquare = i*i
+        var number: Int
+        val sequenceItemsReverse = mutableListOf<Int>()
+        while (iSquare > 0){
+            number = iSquare % 10
+            sequenceItemsReverse.add(number)
+            iSquare /= 10
+        }
+        for (elem in sequenceItemsReverse.reversed()){
+            sequenceItems.add(elem)
+        }
+    }
+    return sequenceItems[n - 1]
+}
 
 /**
  * Сложная (5 баллов)
@@ -203,4 +229,27 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    val k = mutableListOf<Int>(1)
+    var fib1 = 1
+    var fibPrev = 1
+    for (i in 1..n - 1) {
+        if (n in 1..2) return 1
+        val fib2 = fib1
+        var fib3 = fib1
+        var fib4: Int
+        val k2 = mutableListOf<Int>()
+        while (fib3 > 0) {
+            fib4 = fib3 % 10
+            k2.add(fib4)
+            fib3 /= 10
+        }
+        for (elem in k2.reversed()) {
+            k.add(elem)
+        }
+        fib1 += fibPrev
+        fibPrev = fib2
+
+    }
+    return k[n - 1]
+}
