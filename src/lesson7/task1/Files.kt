@@ -288,7 +288,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var text = "<html><body>"
     for (i in textLines.indices) {
         var loopText =
-            (if (i in textLines.indices && !textLines[i].isBlank() &&
+            (if (i in textLines.indices && textLines[i].isNotBlank() &&
                 ((i - 1 in textLines.indices && textLines[i - 1].isBlank())
                         || i - 1 < 0)
             ) "<p>" else "") + textLines[i]
@@ -322,11 +322,11 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             }
             j += 1
         }
-        text += loopText
-        if (!textLines[i].isBlank() &&
+        if (textLines[i].isNotBlank() &&
             ((((i + 1) in (1 until textLines.size)) &&
-                    textLines[i + 1].isBlank()) || ((i + 1) > textLines.size))
-        ) text += "</p>"
+                    textLines[i + 1].isBlank()) || ((i + 1) >= textLines.size))
+        ) loopText += "</p>"
+        text += loopText
     }
     File(outputName).writeText("$text</body></html>")
 }
