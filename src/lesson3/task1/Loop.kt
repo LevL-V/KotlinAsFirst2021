@@ -83,8 +83,7 @@ fun digitNumber(n: Int): Int = TODO()
 fun fib(n: Int): Int {
     var fib1 = 1
     var fibPrev = 1
-    for (i in 1..n) {
-        if (i in 1..2) continue
+    for (i in 3..n) {
         val fib2 = fib1
         fib1 += fibPrev
         fibPrev = fib2
@@ -197,7 +196,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Сложная (4 балла)
  *
  * Найти n-ю цифру последовательности из квадратов целых чисел:
- * 149162536496481100121144...
+ * '149162536496481100121144'...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  *
  * Использовать операции со строками в этой задаче запрещается.
