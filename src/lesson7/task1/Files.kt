@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -234,7 +235,37 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val words: MutableList<String> = mutableListOf()
+    File(inputName).forEachLine {
+        var wordsMap = emptyMap<Char, Int>()
+        val word = it.lowercase().replace("\\r", "")
+        var broke = false
+        for (j in word.indices) {
+            if (wordsMap.containsKey(word[j])) {
+                broke = true
+                break
+            }
+            wordsMap += word[j] to 1
+        }
+        if (!broke) {
+            words.add(it)
+        }
+    }
+    var biggestLength = words[0].length
+    val finalWords = mutableListOf<String>()
+    for (i in words.indices) {
+        if (i in words.indices && words[i].length > biggestLength) {
+            biggestLength = words[i].length
+        } else if (i in words.indices && words[i].length < biggestLength) {
+            words.removeAt(i)
+        }
+    }
+    for (i in words.indices) {
+        if (words[i].length == biggestLength) {
+            finalWords.add(words[i])
+        }
+    }
+    File(outputName).writeText(finalWords.joinToString(", "))
 }
 
 /**
@@ -284,51 +315,7 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  */
 
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    val textLines = File(inputName).readText().split('\n')
-    var text = "<html><body>"
-    for (i in textLines.indices) {
-        var loopText =
-            (if (i in textLines.indices && textLines[i].isNotBlank() &&
-                ((i - 1 in textLines.indices && textLines[i - 1].isBlank())
-                        || i - 1 < 0)
-            ) "<p>" else "") + textLines[i]
-        var counterI = 0
-        var counterB = 0
-        var counterS = 0
-        var j = 0
-        while (j in loopText.indices) {
-            if (loopText.isBlank())
-                break
-            if (loopText[j] == '*' && loopText[j + 1] != '*') {
-                loopText =
-                    loopText.substring(0, j) +
-                            (if (counterI % 2 == 0) "<i>" else "</i>") +
-                            loopText.substring(j + 1)
-                counterI++
-            }
-            if (loopText[j] == '*' && loopText[j + 1] == '*') {
-                loopText =
-                    loopText.substring(0, j) +
-                            (if (counterB % 2 == 0) "<b>" else "</b>") +
-                            loopText.substring(j + 2)
-                counterB++
-            }
-            if (loopText[j] == '~') {
-                loopText =
-                    loopText.substring(0, j) +
-                            (if (counterS % 2 == 0) "<s>" else "</s>") +
-                            loopText.substring(j + 2)
-                counterS++
-            }
-            j += 1
-        }
-        if (textLines[i].isNotBlank() &&
-            ((((i + 1) in (1 until textLines.size)) &&
-                    textLines[i + 1].isBlank()) || ((i + 1) >= textLines.size))
-        ) loopText += "</p>"
-        text += loopText
-    }
-    File(outputName).writeText("$text</body></html>")
+    TODO()
 }
 
 /**
