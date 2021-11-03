@@ -35,10 +35,14 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
-    val col = if (0 in 0..notation.length - 1) notation[0].code else throw IllegalArgumentException()
-    val row = if (1 in 0..notation.length - 1) notation[1].toString().toIntOrNull() else throw IllegalArgumentException()
-    if (col > 104 || row == null || row > 8 || notation.length !in 1..2) throw IllegalArgumentException()
-    return Square(col - 96, row)
+    if (notation.length == 2) {
+        val col = if (notation[0].code in 97..104) notation[0].code else throw IllegalArgumentException()
+        val intNotation = notation[1].toString().toIntOrNull()
+        val row = if (intNotation is Int && intNotation in 1..8
+        ) intNotation else throw IllegalArgumentException()
+        return Square(col - 96, row)
+    }
+    throw IllegalArgumentException()
 }
 
 /**
